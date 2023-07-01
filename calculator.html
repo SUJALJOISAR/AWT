@@ -150,6 +150,8 @@
                             result.style.color = "red";
                             return;
                         }
+                // parseFloat() considers the decimal point and the digits coming after it. parseInt() ignores the decimal point and even the digits coming after it
+                //  Example - parseFloat() of "3.99" would be 3.99	4. Example - parseInt of "3.99" would be 3.
 
                         // Check for numeric values
                         if (isNaN(num1) || isNaN(num2)) {
