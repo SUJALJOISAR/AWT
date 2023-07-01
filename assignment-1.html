@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment-1</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        #firstl{
+            margin: auto 20px;
+        }
+        /*
+        #firstid{
+            margin-top: 20px;
+        } */
+        .input{
+            margin: 20px 20px;
+        }
+
+        #arithmeticbuttons{
+            margin: 20px 20px;
+        }
+
+        .calcbuttons{
+            margin: auto 20px;
+        }
+
+        .resultbox{
+            margin: 10px 40px;
+        }
+
+        .resetbutton{
+            margin: 10px 40px;
+        }
+    </style>
+</head>
+<body>
+       <div class="container">
+            <div class="input">
+                <label for="first" id="firstl"> Enter the first number: <input type="number" id="firstid"></label>
+                <label for="second" id="secondl">Enter the Second number: <input type="number" id="secondid"></label>
+            </div>
+            
+            <div class="calcbuttons">
+                <label for="buttons" id="arithmeticbuttons">
+                    <button id="add" onclick="addition()">ADD</button>
+                    <button id="sub" onclick="subtraction()">SUB</button>
+                    <button id="div" onclick="division()">DIV</button>
+                    <button id="mul" onclick="multiplication()">MUL</button>
+                    <button id="mod" onclick="mod()">MOD</button>
+                </label>
+            </div>
+
+            <div class="resultbox">
+                <label for="result">Result: <input type="number" id="resultsec"></label>
+            </div>
+
+            <div class="resetbutton">
+                <button id="resetbtn" onclick="resetbutton()">Reset</button>
+            </div>
+        </div>
+</body>
+<script>
+    // functions
+   const addition=()=>{
+    var a=Number(document.getElementById('firstid').value);
+    var b=Number(document.getElementById('secondid').value);
+       var c=a+b;
+        document.getElementById('resultsec').value=c;
+    }
+
+    const subtraction=()=>{
+        var a=Number(document.getElementById('firstid').value);
+    var b=Number(document.getElementById('secondid').value);
+       var c=a-b;
+        document.getElementById('resultsec').value=c;
+    }
+
+    const multiplication=()=>{
+        var a=Number(document.getElementById('firstid').value);
+    var b=Number(document.getElementById('secondid').value);
+       var c=a*b;
+        document.getElementById('resultsec').value=c;
+    }
+
+    const division=()=>{
+        var a=Number(document.getElementById('firstid').value);
+    var b=Number(document.getElementById('secondid').value);
+       var c=a/b;
+        document.getElementById('resultsec').value=c;
+    }
+
+    const mod=()=>{
+        var a=Number(document.getElementById('firstid').value);
+    var b=Number(document.getElementById('secondid').value);
+       var c=a%b;
+        document.getElementById('resultsec').value=c;
+    }
+
+    //reset function
+    resetbutton=()=>{
+    if(confirm("Are you sure want to reset?")){
+        document.getElementById('firstid').value = "";
+            document.getElementById('secondid').value = "";
+            document.getElementById('resultsec').value = "";
+        }
+    }
+    
+
+</script>
+</html>
+
+<!-- With Onclick() event
+1.Write javascript function for arithmetic operations -->
