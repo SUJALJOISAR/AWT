@@ -6,18 +6,14 @@
     <title>Document</title>
 </head>
 <body>
-    
-        <div id="container">
+    <div id="container">
         <button>Click me!</button>
         </div>
 
         <pre id="output"></pre>
-        <!-- Event bubbling describes how the browser handles events targeted at nested elements. -->
-        <!-- The pre element represents a block of preformatted text, in which structure is represented by typographic conventions rather than by elements. -->
-    
 </body>
 <script>
-const output = document.querySelector("#output");
+    const output = document.querySelector("#output");
 function handleClick(e) {
 output.textContent += `You clicked on a ${e.currentTarget.tagName} element\n`;
 }
@@ -25,20 +21,17 @@ output.textContent += `You clicked on a ${e.currentTarget.tagName} element\n`;
 const container = document.querySelector("#container");
 const button = document.querySelector("button");
 
-document.body.addEventListener("click", handleClick);
-container.addEventListener("click", handleClick,);
+document.body.addEventListener("click", handleClick,{ capture: true });
+container.addEventListener("click", handleClick,{ capture: true });
 button.addEventListener("click", handleClick);
+    // An alternative form of event propagation is event capture. This is like event bubbling but the order is reversed: so instead of the event firing first on the innermost element targeted, and then on successively less nested elements, the event fires first on the least nested element, and then on successively more nested elements, until the target is reached. -->
 
-//output of code:-
-// You clicked on a BUTTON element
+    // our output will be look like this
+//     You clicked on a BODY element
 // You clicked on a DIV element
-// You clicked on a BODY element
-
-// the click on the button fires first
-// followed by the click on its parent (the <div> element)
-// followed by the <div> element's parent (the <body> element).
+// You clicked on a BUTTON element
 
 //here in bubbling event first the element will target on whom it is click then it will move to its parent elements . so it will be child to parent
 //while in event capture it will be reversed i.e parent to child it will execute. 
-</script> 
+</script>
 </html>

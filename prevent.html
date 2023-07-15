@@ -7,7 +7,7 @@
     
 </head>
 <body>
-    <form action="prevent.php">
+    <form>
         <div>
         <label for="fname">First name: </label>
         <input id="fname" type="text" />
@@ -22,5 +22,18 @@
     </form>
     <p></p>
 </body>
-<script type="text/javascript" src="prevent.js"></script>
+<!-- <script type="text/javascript" src="prevent.js"></script> -->
+<script>
+    const form=document.querySelector('form');
+    const fname=document.querySelector('fname');
+    const lname=document.querySelector('lname');
+    const para=document.querySelector('p');
+
+    form.addEventListener('submit',(e)=>{
+        if(fname=='' || lname==''){
+            e.preventDefault();
+            para.textContent='you need to fill both the names';
+        }
+    })
+</script>
 </html>

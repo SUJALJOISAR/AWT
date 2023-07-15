@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Player Example</title>
+</head>
+<body>
+    <button>Display Video</button>
+
+    <div class="hidden">
+        <video src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm" type="video/webm">
+            <p>Your Browser dosen't support HTML video.Here is a <a href="rabbit320.mp4">Linke to Video</a></p>
+        </video>
+    </div>
+</body>
+<script>
+    const btn=document.querySelector('button');
+    const box=document.querySelector('div');
+    const video=document.querySelector('video');
+
+    btn.addEventListener("click",()=>{
+        box.classList.remove("hidden");
+    });
+
+    video.addEventListener("click",(e)=>{
+        e.stopPropagation();
+        video.play();
+    })
+
+    box.addEventListener("click",()=>{
+        box.classList.add("hidden");
+    })
+
+//See there is one problem 
+//     You should see that when you click the button, the box and the video it contains are shown. But then when you click the video, the video starts to play, but the box is hidden again!
+
+// The video is inside the <div> — it is part of it — so clicking the video runs both the event handlers, causing this behavior.
+
+// Fixing the problem with stopPropagation()
+// All we're doing here is calling stopPropagation() on the event object in the handler for the <video> element's 'click' event. This will stop that event from bubbling up to the box. Now try clicking the button and then the video:
+//so to stop event bubbling use stoppropagation() function.
+</script>
+</html>

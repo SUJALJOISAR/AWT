@@ -17,6 +17,8 @@
     </style>
 </head>
 <body>
+    <!-- In the last section, we looked at a problem caused by event bubbling and how to fix it. Event bubbling isn't just annoying, though: it can be very useful. In particular, it enables event delegation. In this practice, when we want some code to run when the user interacts with any one of a large number of child elements, we set the event listener on their parent and have events that happen on them bubble up to their parent rather than having to set the event listener on every child individually. -->
+    <!-- means agar ghana badha element hoi toh pachi aapde badha ma event listener na add karvu hoi toh khali parent element ma add kari devu. this is called event delegation -->
     <div id="container">
         <div class="tile"></div>
         <div class="tile"></div>
@@ -51,5 +53,8 @@ const container = document.querySelector("#container");
 container.addEventListener("click", (event) => {
 event.target.style.backgroundColor = bgChange(); // currentTarget=> <div id="container">
 });
+// Note: In this example, we're using event.target to get the element that was the target of the event (that is, the innermost element). If we wanted to access the element that handled this event (in this case the container) we could use event.currentTarget.
+//means currenttarget means kena upar event listener handled thai che
+//target means ke je event handle kare che aena kaya innermost upar click kari toh desired result male aetle {target} thi innermost element male.
 </script>
 </html>
