@@ -174,11 +174,11 @@
       const username = usernameEL.value.trim();
 
       if (!isRequired(username)) {
-        showError(usernameEL, "Username cannot be blank");
+        showError(usernameEL, "* Username cannot be blank");
       } else if (!isBetween(username.length, min, max)) {
         showError(
           usernameEL,
-          "Username must between " + min + " and " + max + " characters"
+          "*Username must between " + min + " and " + max + " characters"
         );
       } else {
         showSuccess(usernameEL);
@@ -191,9 +191,9 @@
       let valid = false;
       const email = emailEL.value.trim();
       if (!isRequired(email)) {
-        showError(emailEL, "Email cannot be blank");
+        showError(emailEL, "*Email cannot be blank");
       } else if (!isEmailValid(email)) {
-        showError(emailEL, "Invalid Email format.");
+        showError(emailEL, "*Invalid Email format.");
       }
     };
 
@@ -202,9 +202,9 @@
       const password = passwordEL.valid.trim();
 
       if (!isRequired(password)) {
-        showError(passwordEL, "Password cannot be blank");
+        showError(passwordEL, "*Password cannot be blank");
       } else if (!isPasswordSecure(password)) {
-        showError(passwordEL,"Password must be at least 8 characters that include at least 1 lowercase, 1 uppercase ,  1 integer, and 1 special character" );
+        showError(passwordEL,"*Password must be at least 8 characters that include at least 1 lowercase, 1 uppercase ,  1 integer, and 1 special character" );
       } else {
         showSuccess(passwordEL);
         valid = true;
@@ -217,9 +217,9 @@
       const confirmPassword = confirmpasswordEL.valid.trim();
       const password = passwordEL.valid.trim();
       if (!isRequired(confirmPassword)) {
-        showError(confirmpasswordEL, "Please enter the password again");
+        showError(confirmpasswordEL, "*Please enter the password again");
       } else if (password !== confirmPassword) {
-        showError(confirmpasswordEL, "The Password Does not Match");
+        showError(confirmpasswordEL, "*The Password Does not Match");
       } else {
         showSuccess(confirmpasswordEL);
         valid = true;
