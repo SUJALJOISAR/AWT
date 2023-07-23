@@ -1,285 +1,170 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Form Validation</title>
-    <style>
-      @import url("https://fonts.googleapis.com/css?family=Open+Sans&display=swap");
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Form Validation Using bootstrap</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+<style>
+  .error-message {
+    color: red;
+    font-size: 12px;
+  }
 
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
+  .form-control input:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+  }
 
-      body {
-        font-family: "Open Sans", sans-serif;
-        font-size: 16px;
-        background-color: #f4f4f4;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        /* margin: 0; */
-      }
+  .form-control.success input {
+    border-color: #09c372;
+    box-shadow: none;
+  }
 
-      .container {
-        background-color: #fff;
-        padding: 1em;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-        width: 400px;
-      }
+  .form-control.error input {
+    border-color: #ff3860;
+    box-shadow: none;
+  }
 
-      .form {
-        padding: 10px 20px;
-      }
+  .form-floating.error .error-message {
+    height: 20px;
+  }
 
-      .form h1 {
-        font-size: 1.5em;
-        text-align: center;
-        margin-bottom: 20px;
-      }
+</style>
+<body>
 
-      .form-field {
-        margin-bottom: 5px;
-      }
+<form id="myForm">
+  <div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog" id="modalSignin">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content rounded-4 shadow">
 
-      .form-field label {
-        display: block;
-        color: #777;
-        margin-bottom: 5px;
-      }
-
-      .form-field input {
-        border: solid 2px #f0f0f0;
-        border-radius: 3px;
-        padding: 10px;
-        margin-bottom: 5px;
-        font-size: 14px;
-        display: block;
-        width: 100%;
-      }
-
-      .form-field input:focus {
-        outline: none;
-      }
-
-      .form-field.error input {
-        border-color: var(--error-color);
-      }
-
-      .form-field.success input {
-        border-color: var(--success-color);
-      }
-
-      .form-field small {
-        color: var(--error-color);
-      }
-
-      /* button */
-      .btn {
-        width: 100%;
-        padding: 3%;
-        background: #007bff;
-        border-bottom: 2px solid #007bff;
-        border-top-style: none;
-        border-right-style: none;
-        border-left-style: none;
-        color: #fff;
-        text-transform: uppercase;
-      }
-
-      .btn:hover {
-        background: #0069d9;
-        cursor: pointer;
-      }
-
-      .btn:focus {
-        outline: none;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <form class="form" id="signup">
-        <h1>Sign Up</h1>
-
-        <div class="form-field">
-          <label for="username">Username:</label>
-          <input type="text" name="username" id="username" autocomplete="off" />
-          <small></small>
+        <div class="modal-header p-5 pb-4 border-bottom-0">
+          <h1 class="fw-bold mb-0 fs-2">Sign up for free</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
-        <div class="form-field">
-          <label for="email">Email Address:</label>
-          <input type="email" name="email" id="email" autocomplete="off" />
-          <small></small>
+        <div class="modal-body p-5 pt-0">
+
+          <div class="form-floating mb-3 form-control">
+            <input type="text" class="form-control" id="floatingInputName" placeholder="Username">
+            <label for="floatingInputName">Username</label>
+            <div class="error-message"></div>
+          </div>
+
+          <div class="form-floating mb-3 form-control">
+            <input type="email" class="form-control" id="floatingInputEmail" placeholder="name@example.com">
+            <label for="floatingInputEmail">Email address</label>
+            <div class="error-message"></div>
+          </div>
+
+          <div class="form-floating mb-3 form-control">
+            <input type="password" class="form-control" id="floatingInputPassword" placeholder="Password">
+            <label for="floatingInputPassword">Password</label>
+            <div class="error-message"></div>
+          </div>
+
+          <!-- New Input Field for ID -->
+          <div class="form-floating mb-3 form-control">
+            <input type="text" class="form-control" id="floatingInputID" placeholder="21CE046">
+            <label for="floatingInputID">ID</label>
+            <div class="error-message"></div>
+          </div>
+
+          <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">Sign up</button>
+          <small class="text-body-secondary">By clicking Sign up, you agree to the terms of use.</small>
+
+          <!-- This Script is of Youtube video -->
+          <!-- <div class="input-control">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username">
+            <div class="error-message"></div>
+          </div> -->
+
         </div>
 
-        <div class="form-field">
-          <label for="password">Password:</label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            autocomplete="off"
-          />
-          <small></small>
-        </div>
-
-        <div class="form-field">
-          <label for="confirm-password">Confirm Password:</label>
-          <input
-            type="password"
-            name="confirm-password"
-            id="confirm-password"
-          />
-          <small></small>
-        </div>
-
-        <div class="form-field">
-          <input type="submit" value="Sign Up" />
-        </div>
-      </form>
-
-      <!-- Each form field has three elements:
-        A label
-        An input field
-        A <small> element
-        You’ll use the <small> tag to show the error message to the users. 
-        
-            If an input field isn’t valid, we’ll make its border color red by adding the error class to the form-field element. It’ll look like this:
-            <div class="form-field error"></div>
-
-            f the value of an input field is valid, then we’ll make its border color green by adding the success class to the form-field element as follows:
-            <div class="form-field success"></div>
-        -->
+      </div>
     </div>
-  </body>
-  <script>
-    const usernameEL = document.querySelector("#username");
-    const emailEL = document.querySelector("#email");
-    const passwordEL = document.querySelector("#password");
-    const confirmpasswordEL = document.querySelector("#confirm-password");
-    const form = document.querySelector("#signup");
+  </div>
+</form>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+<script>
+  const form = document.querySelector('#myForm');
+  const email = document.querySelector('#floatingInputEmail');
+  const password = document.querySelector('#floatingInputPassword');
+  const username = document.querySelector('#floatingInputName');
+  const id = document.querySelector('#floatingInputID'); // New input field for ID
 
-    const checkUsername = () => {
-      let valid = false;
-      const min = 3,
-        max = 25;
+  form.addEventListener('submit', (e) => {
+    e.preventDefault(); // Prevent form submission if there are errors
+    validateInputs();
+  });
 
-      const username = usernameEL.value.trim();
+  const setError = (element, message) => {
+    const formControl = element.parentElement;
+    const errorDisplay = formControl.querySelector('.error-message');
 
-      if (!isRequired(username)) {
-        showError(usernameEL, "* Username cannot be blank");
-      } else if (!isBetween(username.length, min, max)) {
-        showError(
-          usernameEL,
-          "*Username must between " + min + " and " + max + " characters"
-        );
-      } else {
-        showSuccess(usernameEL);
-        valid = true;
-      }
-      return valid;
-    };
+    errorDisplay.textContent = message;
+    formControl.classList.add('error');
+    formControl.classList.remove('success');
+  }
 
-    const checkEmail = () => {
-      let valid = false;
-      const email = emailEL.value.trim();
-      if (!isRequired(email)) {
-        showError(emailEL, "*Email cannot be blank");
-      } else if (!isEmailValid(email)) {
-        showError(emailEL, "*Invalid Email format.");
-      }
-    };
+  const setSuccess = (element) => {
+    const formControl = element.parentElement;
+    const errorDisplay = formControl.querySelector('.error-message');
 
-    const checkPassword = () => {
-      let valid = false;
-      const password = passwordEL.valid.trim();
+    errorDisplay.textContent = '';
+    formControl.classList.add('success');
+    formControl.classList.remove('error');
+  }
 
-      if (!isRequired(password)) {
-        showError(passwordEL, "*Password cannot be blank");
-      } else if (!isPasswordSecure(password)) {
-        showError(passwordEL,"*Password must be at least 8 characters that include at least 1 lowercase, 1 uppercase ,  1 integer, and 1 special character" );
-      } else {
-        showSuccess(passwordEL);
-        valid = true;
-      }
-      return valid;
-    };
+  const isValidEmail = (email) => {
+    const re = /^[a-zA-Z0-9._%+-]+@charusat\.edu\.in$/;
+    return re.test(String(email).toLowerCase());
+  }
 
-    const checkConfirmPassword = () => {
-      let valid = false;
-      const confirmPassword = confirmpasswordEL.valid.trim();
-      const password = passwordEL.valid.trim();
-      if (!isRequired(confirmPassword)) {
-        showError(confirmpasswordEL, "*Please enter the password again");
-      } else if (password !== confirmPassword) {
-        showError(confirmpasswordEL, "*The Password Does not Match");
-      } else {
-        showSuccess(confirmpasswordEL);
-        valid = true;
-      }
-      return valid;
-    };
+  const isValidID = (id) => {
+    const re = /^[0-9]{2}[A-Z]{2}[0-9]{3}$/;
+    return re.test(String(id).toUpperCase());
+  }
 
-    const isEmailValid = (emailEL) => {
-      const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(emailEL);
-    };
+  const validateInputs = () => {
+    const emailValue = email.value.trim();
+    const passwordValue = password.value.trim();
+    const nameValue = username.value.trim();
+    const idValue = id.value.trim(); // Get the value of the ID field
 
-    const isPasswordSecure = (passwordEL) => {
-      const re = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
-      return re.test(passwordEL);
-    };
-
-    const isRequired = value => value === '' ? false:true;
-    const isBetween = (length,min,max) => length<min || length>max ?false:true;
-
-    const showError = (input,message) =>{
-        //get the form-field element
-        const formField = input.parentElement;
-        //add the error class
-        formField.classList.remove('success');
-        formField.classList.add('error');
-
-        //show the error message
-        const error = formField.querySelector('small');
-        error.textContent = message;
+    if (nameValue === '') {
+      setError(username, 'Username is Required');
+    } else {
+      setSuccess(username);
     }
 
-    const showSuccess = (input) => {
-    // get the form-field element
-    const formField = input.parentElement;
+    if (emailValue === '') {
+      setError(email, 'Email is required');
+    } else if (!isValidEmail(emailValue)) {
+      setError(email, 'Invalid Email');
+    } else {
+      setSuccess(email);
+    }
 
-    // remove the error class
-    formField.classList.remove('error');
-    formField.classList.add('success');
+    if (passwordValue === '') {
+      setError(password, 'Password is Required');
+    } else if (passwordValue.length < 8) {
+      setError(password, 'Password must be at least 8 characters');
+    } else {
+      setSuccess(password);
+    }
 
-    // hide the error message
-    const error = formField.querySelector('small');
-    error.textContent = '';
-}
-
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      //validate fields
-      let isUsernameValid = checkUsername(),
-      isEmailValid   = checkEmail(),
-      isPasswordValid = checkPassword(),
-      isConfirmPasswordValid = checkConfirmPassword();
-
-      let isFormValid = isUsernameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid;
-
-      //submit to server if the form is vaild
-    //   if(isFormValid){}
-    });
-
-    // In the event listener, you need to call the e.preventDefault() to prevent the form from submitting once the submit button is clicked.
-  </script>
+    // Validate ID field
+    if (idValue === '') {
+      setError(id, 'ID is Required');
+    } else if (!isValidID(idValue)) {
+      setError(id, 'Invalid ID format. Please use the format "21CE046"');
+    } else {
+      setSuccess(id);
+    }
+  }
+</script>
 </html>
