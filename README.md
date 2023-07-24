@@ -1,2 +1,2 @@
 # JS-Tutorials
-This repository contains the JS Tutorials for Beginners
+This repository contains the AWT Assignments and other material also for beginners.
