@@ -64,3 +64,52 @@
 
 
 //always use "use strict" to avoid error and fix bugs easily.
+
+//mdn Reference
+
+
+// Whole-script strict mode syntax
+// "use strict";
+// const v = "Hi! I'm a strict mode script!";
+
+
+//Using Strict in nested functions
+// to invoke strict mode for a function, put the exact statement "use strict"; (or 'use strict';) in the function's body before any other statements.
+function myfun(){
+    //functional level strict mode syntax
+    "use strict";
+
+    function nested(){
+        return "And so am I!";
+    }
+
+    return `Hi I'am a strict mode function! ${nested()}`;
+}
+
+function mynotstrictfunction(){
+    return 'I am not strict';
+}
+//See for function we have to  write 'use strict' inside the function body i.e it should be the first statement inside the body
+
+
+
+// The "use strict" directive can only be applied to the body of functions with simple parameters. Using "use strict" in functions with rest, default, or destructured parameters is a syntax error.
+
+//means if we apply default parameters and use 'use strict' then it will give error
+// function sum(a=10,b=2){
+//     // SyntaxError: "use strict" not allowed in function with default parameter
+//     'use strict';
+//     return a+b;
+// }
+
+// The entire contents of JavaScript modules are automatically in strict mode, with no statement needed to initiate it.
+//means appde je pan modules banavi chi node js savthi pehla using 'npm init' ae badha by default strict mode ni andar j hase
+
+// function myStrictFunction() {
+//     // because this is a module, I'm strict by default
+//   }
+//   export default myStrictFunction;
+
+
+
+  
