@@ -307,7 +307,7 @@ const faculties=[{
 function enrollFaculty(faculty){
   setTimeout(() => {
     faculties.push(faculty);
-  }, 3000);
+  }, 5000);
 }
 
 function getFaculty(){
@@ -343,7 +343,7 @@ function enrollFaculty1(faculty,Callback){
   setTimeout(() => {
     faculties1.push(faculty);
     Callback();
-  }, 3000);
+  }, 5000);
 }
 
 function getFaculty1(){
@@ -430,10 +430,118 @@ fun1().then(function(){
   console.log("Me:Bad bro");
 })
 
+//lets take the same faculty example and do it with promises.
+const faculties2=[{
+  name:"MLR",
+  Subject:"ML",
+},{
+  name:"Martin Parmar",
+  Subject:"AI",
+}];
+//above is array
+
+function enrollFaculty2(faculty){
+  return new Promise(function(resolve,reject){
+    setTimeout(() => {
+      faculties2.push(faculty);
+      console.log('Faculty has been enrolled');
+      const error=false;
+      if(!error){
+        resolve();
+      }
+      else{
+        reject();
+      }
+        }, 3000);
+  });
+}
+
+function getFaculty2(){
+  setTimeout(() => {
+    console.log('Faculties are fetched');
+    console.log(faculties2);
+  }, 1000);
+}
+
+let newFaculty2 = {name:"Sneha Padhiar",Subject:"SE"};
+enrollFaculty2(newFaculty2).then(function(){
+  getFaculty2();
+}).catch(function(){
+  console.log('some error occured');
+});
+
+//in short the function inside "then" is run as "resolve"
+//and functions outside "then" is run as "reject"
+
+//async and await
+//first see this normal function
+function name(){
+  console.log("Inside name function");
+  return "awt";
+}
+
+console.log("before calling name function");
+let a=name();
+console.log("After calling name function");
+console.log(a);
+console.log("last line of code");
+//output
+// before calling name function
+// Inside name function
+// After calling name function
+// awt
+// last line of code 
 
 
+//now if we apply async() keyword before the name() function then it returns promise means it will be first complete its task then only functions/statements after that will execute.
 
+async function name1(){
+  console.log("Inside name function");
+  return "awt";
+}
 
+console.log("before calling name function");
+let b=name1();
+console.log("After calling name function");
+console.log(b);
+console.log("last line of code");
+//output
+// before calling name function
+// Inside name function
+// After calling name function
+// Promise { 'awt' }
+// last line of code
+
+async function name2(){
+  console.log("Inside name function");
+  const response=await fetch('https://api.github.com/users');
+  console.log('before response');
+  const users=await response.json();
+  console.log('users resolved');
+  return users;
+  // return "awt";
+}
+
+console.log("before calling name function");
+let c=name2();
+console.log("After calling name function");
+console.log(c);
+c.then((data)=>{
+  console.log(data);
+})
+console.log("last line of code");
+//see here there are total 3 promises in name2() function
+//now here happens that first "before calling name function" will be execute
+//then it will call name2() function then inside that "inside name function" will be print.
+//now after that there is one promise so it will say that it will take time to execute so in meanwhile execute other statements.
+//so it will print "After calling name function"
+//then again it will check whether the promise has been completed or not
+//if not the promise will be printed.
+//now again it will check and yes now it will completed so "Before response" will be printed.
+//now again after that next promise is there so it will take time to execute meanwhile other statements will be execute but it is the last function only so just convert into json() form and execute and at last the users will be return.
+
+//in short if we make function async() then it returns promise that it will execute itself after some work.
+//and whenever it encounters "await" it will again return promise from that and executes rest of the functions/statements.
 
 
 
