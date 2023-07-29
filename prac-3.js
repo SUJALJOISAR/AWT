@@ -1,5 +1,5 @@
 'use strict';
-//let keyword
+//let keyword is used at block level
 let x=1;
 
 if(x === 1){
@@ -192,18 +192,255 @@ class Rectangle {
   }
   
   // Expression; the class is anonymous but assigned to a variable
-  const Rectangle = class {
-    constructor(height, width) {
-      this.height = height;
-      this.width = width;
-    }
-  };
+  // const Rectangle = class {
+  //   constructor(height, width) {
+  //     this.height = height;
+  //     this.width = width;
+  //   }
+  // };
   
   // Expression; the class has its own name
-  const Rectangle = class Rectangle2 {
-    constructor(height, width) {
-      this.height = height;
-      this.width = width;
-    }
-  };
+  // const Rectangle = class Rectangle2 {
+  //   constructor(height, width) {
+  //     this.height = height;
+  //     this.width = width;
+  //   }
+  // };
+
+  //Default Parameters
+  function multiply(a, b = 1) {
+    return a * b;
+  }
   
+  console.log(multiply(5, 2));
+  // Expected output: 10
+  
+  console.log(multiply(5));
+  // Expected output: 5
+
+
+  //Rest Parameters
+  // The rest parameter syntax allows a function to accept an indefinite number of arguments as an array, providing a way to represent variadic functions in JavaScript.
+
+  function sum(...theArgs){
+    let tot=0;
+    for(const e of theArgs){
+      tot+=e;
+    }
+    return tot;
+  }
+
+  console.log(sum(1,2,3));
+  console.log(sum(1,2,3,4));
+  //syntax
+  // function f(a, b, ...theArgs) {
+  //   // …
+  // }
+  
+  function myFun(a,b,...many){
+    console.log(a);
+    console.log(b);
+    many.forEach((element)=>{
+      console.log(`Element is ${element}`);
+    })
+  }
+
+  myFun("one","two","three","four","five","six");
+
+  // A function definition can only have one rest parameter, and the rest parameter must be the last parameter in the function definition.
+//   function wrong1(...one, ...wrong) {}
+// function wrong2(...wrong, arg2, arg3) {}
+//above is not possible
+
+
+//symbol
+// Symbol is a built-in object whose constructor returns a symbol
+// Symbols are often used to add unique property keys to an object that won't collide with keys any other code might add to the object, and which are hidden from any mechanisms other code will typically use to access the object.
+// Every Symbol() call is guaranteed to return a unique Symbol.
+//Every Symbol.for("key") call will always return the same Symbol for a given value of "key". 
+// When Symbol.for("key") is called, if a Symbol with the given key can be found in the global Symbol registry, that Symbol is returned. 
+// Otherwise, a new Symbol is created, added to the global Symbol registry under the given key, and returned.
+
+// To create a new primitive Symbol, you write Symbol() with an optional string as its description:
+const sym1=Symbol();
+const sym2=Symbol("foo");
+const sym3=Symbol("foo");
+// Note that Symbol("foo") does not coerce(collide with) the string "foo" into a Symbol. It creates a new Symbol each time:
+console.log(Symbol("foo") === Symbol("foo"));//false
+
+//We can't declare Symbol using "new" operator
+// const sym4=new Symbol();//error
+// This prevents authors from creating an explicit Symbol wrapper object instead of a new Symbol value and might be surprising as creating explicit wrapper objects around primitive data types is generally possible (for example, new Boolean, new String and new Number).
+
+// If you really want to create a Symbol wrapper object, you can use the Object() function:
+const sym6=Symbol("foo");
+typeof sym6;//"symbol"
+
+const symObj=Object(sym6);
+typeof symObj;//"object"
+
+//mostly symbol is used in encapsulation
+// Because symbols are the only primitive data type that has reference identity (that is, you cannot create the same symbol twice), they behave like objects in some way
+
+
+//Asynchronous programming
+//Now Asynchronous programming allows multiple things to be execute at one time while synchronous programming does not.
+
+//There are 3 way to acheive this:-
+// 1)async/wait
+// 2)promises
+// 3)Callbacks
+
+//basically asynchronous functions run in background. if the function is going to take 3ms to complete then it will not block other functions. it will let him to complete before that function execute. 
+
+//callback functions
+
+const faculties=[{
+  name:"MLR",
+  Subject:"ML",
+},{
+  name:"Martin Parmar",
+  Subject:"AI",
+}];
+//above is array
+
+function enrollFaculty(faculty){
+  setTimeout(() => {
+    faculties.push(faculty);
+  }, 3000);
+}
+
+function getFaculty(){
+  setTimeout(() => {
+    console.log(faculties);
+  }, 1000);
+}
+
+let newFaculty = {name:"Sneha Padhiar",Subject:"SE"};
+enrollFaculty(newFaculty);
+getFaculty();
+
+//see now here the faculty get enrolled in 3ms and it will be enrolled in background but the getFaculty function will execute when its timeout gets over i.e it will execute in 1ms .
+//so we will get this output only .
+// [
+//   { name: 'MLR', Subject: 'ML' },
+//   { name: 'Martin Parmar', Subject: 'AI' }
+// ]
+//we will not get newFaculty.
+
+//to acheive this we use callback funtion. we will give callback function to function enrollFaculty() so that when it completes his work of enrolling then after that only the getFaculty function will be called.
+
+const faculties1=[{
+  name:"MLR",
+  Subject:"ML",
+},{
+  name:"Martin Parmar",
+  Subject:"AI",
+}];
+//above is array
+
+function enrollFaculty1(faculty,Callback){
+  setTimeout(() => {
+    faculties1.push(faculty);
+    Callback();
+  }, 3000);
+}
+
+function getFaculty1(){
+  setTimeout(() => {
+    console.log(faculties1);
+  }, 1000);
+}
+
+let newFaculty1 = {name:"Sneha Padhiar",Subject:"SE"};
+enrollFaculty1(newFaculty1,getFaculty1);
+// getFaculty1();
+
+//see now output will be
+// [
+//   { name: 'MLR', Subject: 'ML' },
+//   { name: 'Martin Parmar', Subject: 'AI' },
+//   { name: 'Sneha Padhiar', Subject: 'SE' }
+// ]
+//in short using callback function will execute first and then only the other function will execute after its completion.
+
+
+//promises
+// Essentially, a promise is a returned object to which you attach callbacks, instead of passing callbacks into a function
+
+// Imagine a function, createAudioFileAsync(), which asynchronously generates a sound file given a configuration record and two callback functions: one called if the audio file is successfully created, and the other called if an error occurs.
+
+// function successCallback(result){
+//   console.log(`Audio file ready at URL:${result}`);
+// }
+
+// function failureCallback(error){
+//   console.error(`Error generating audio file:${error}`);
+// }
+
+// createdAudioFileAsync(audioSetting,successCallback,failureCallback);
+
+//if we write the above function in form of promise then:-
+// createdAudioFileAsync(audioSetting).then(successCallback,failureCallback);
+
+// A common need is to execute two or more asynchronous operations back to back, where each subsequent operation starts when the previous operation succeeds, with the result from the previous step
+
+// doSomething(function(result){
+  
+//   doSomethingElse(result,function(newResult){
+    
+//     doThirdThing(newResult,function(finalResult){
+//       console.log(`Got the final result:${finalResult}`)
+//     },failureCallback);
+
+//   },failureCallback);
+
+// },failureCallback);
+
+// // With promises, we accomplish this by creating a promise chain.
+// const promise=doSomething();
+// const promise2=promise.then(successCallback,failureCallback);
+
+//Understand from here
+//see basically promises are used to either do one of these things:-
+// 1)resolve
+// 2)reject
+// 3)pending
+
+//let say this function can either fullfill the service or reject it
+
+function fun1(){
+  return new Promise(function(resolve,reject){
+    setTimeout(() => {
+      const error=true;
+      if(!error){
+        console.log('Your promise is resolved');
+        resolve();
+      }
+      else{
+        console.log("Promise rejected");
+        reject() ;
+      }
+    }, 2000);
+  })
+}
+fun1().then(function(){
+  console.log("Me:Thanks for resolving");
+}).catch(function(){
+  console.log("Me:Bad bro");
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
