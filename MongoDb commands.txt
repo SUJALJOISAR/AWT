@@ -1,0 +1,41 @@
+1)show database
+show db
+
+2)create database
+use db
+
+3)create collection
+db.createCollection("")
+
+4)view collections
+show collections
+
+5)drop database 
+db.dropDatabase()
+
+6)drop collection
+db.collection.drop()
+
+7)get list of collections
+db.getCollectionInfo
+
+8)Insert Command
+db.persons.insertOne({name:"Raj",age:30})
+db.persons.insertMany([ {},{},...  ])
+db.flightData.insertOne({departure:"RJT",arrivalAirport:"SRT",distance:600})
+
+9)delete command
+db.flightData.deleteOne({})
+db.flightData.deleteMany({},{})
+db.flightData.deleteOne({departure:"AHB"})
+db.flightData.deleteMany({status:"Delay"})
+
+10)find command
+db.flightData.find({status:"D"})
+
+11)update
+db.flightData.updateOne({departureAirport:"AHB",{$set:{status:"delay"}}})
+db.flightData.updateMany({},{$set:{status:"Onetime"}})
+
+
+

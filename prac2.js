@@ -42,6 +42,8 @@ const Student = {
   // undefined
 
   var arr3=["nodejs","reactjs","cloud"]
+  arr3=arr3.concat(arr2);
+  console.log(arr3);
   arr3=arr3.concat('',arr2);
   console.log(arr3);
 
@@ -56,11 +58,21 @@ console.log(str2.concat(', ', str1));
   
 const months =['jan','march','april','june'];
 months.splice(1,0,'feb');
-//syntax is splice(index,replace/not index,addthing)
 console.log(months);
+//syntax
+// splice(start)
+// splice(start, deleteCount)
+// splice(start, deleteCount, item0)
+// splice(start, deleteCount, item0, item1)
+// splice(start, deleteCount, item0, item1, /* …, */ itemN)
+
+// An integer indicating the number of elements in the array to remove from start.
 
 months.splice(3,1,'dec');
 console.log(months);
+
+months.splice(3,2,'july','nov');
+console.log(months);//first parameter means kya index upar rakhvanu che, pachi second parameter means ae index pachi thi ketla delete karvana che ane third ane pachi badha paramters ma items lakhvanu kahe che jeh tyathi add thase 
 
 const tech=["nodejs","reactjs","c++","c","java","cloud"];
 console.log(tech.slice(2));

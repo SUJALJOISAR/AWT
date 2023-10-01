@@ -1,6 +1,6 @@
 'use strict';
 
-prac-1
+// prac-1
 let str="awt"
 let b='true'
 let a=10

@@ -115,6 +115,8 @@ const mergedObj = { ...obj1, ...obj3 };
 const obj5 = { foo: "bar", x: 42 };
 Object.assign(obj5, { x: 1337 });
 console.log(obj5); // { foo: "bar", x: 1337 }
+// Object.assign(obj5, {x:12,foo:"hello"});
+// console.log(obj5);
 //see here using Object.assign() can change the value of x due to its syntax. while spreadoff operator does not change
 
 const obj6={ foo: "bar", x: 42 };
@@ -157,6 +159,37 @@ for(const property in object){
 //syntax
 // for (variable in object)
 //   statement
+
+
+//Foreach Loop
+const array4 = ['a', 'b', 'c'];
+
+array4.forEach((element) => console.log(element));
+
+//proper understand from this
+let birds=["parrot","peacock","eagle"]
+for(const bird of birds){
+    console.log(bird)
+}
+//o/p 
+//parrot
+//peacock
+//eagle
+
+for(const bird in birds){
+ console.log(bird)
+}
+//o/p
+// 0
+// 1
+// 2
+
+//means If we Use For..of Operator then it will give directly the element inside the Iterable object like array, string etc
+//But if we use For..in Operator then it will give the indexes of the elements of Iterable objects 
+
+// Expected output: "a"
+// Expected output: "b"
+// Expected output: "c"
 
 //The Map object holds key-value pairs and remembers the original insertion order of the keys. Any value (both objects and primitive values) may be used as either a key or a value.
 
@@ -293,6 +326,52 @@ typeof symObj;//"object"
 
 //basically asynchronous functions run in background. if the function is going to take 3ms to complete then it will not block other functions. it will let him to complete before that function execute. 
 
+//some basic of callback functions
+//without using callback function 
+// function loadscript(src){
+//   // var script=document.createElement('script'); here it will show error as it is just js page we need html page for it 
+//   script.src=src;
+//   script.onload=()=>{
+//     console.log(`Script Loaded ${src}`);
+//   }
+//   document.body.appendChild(script);
+// }
+
+// loadscript("https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js");
+// //see in o/p we will see nothing as it is bootstrap js so it will automatically loaded.
+
+//now if we want that after loading the script another function should be called.
+// function loadscript(src,callback){
+//   // var script=document.createElement('script'); here it will show error as it is just js page we need html page for it 
+//   script.src=src;
+//   script.onload=()=>{
+//     console.log(`Script Loaded ${src}`);
+//     callback(null,src);
+//   }
+//   script.onerror = function(){
+//     console.log("Error has come in SRC:"+src); 
+//     callback(new Error("Src got some error"));
+//   }
+//   document.body.appendChild(script);
+// }
+
+// function helloworld(error,src){
+//   if(error){
+//     console.log(error);
+//     return;
+//   }
+//   console.log("helloworld");
+// }
+
+// loadscript("https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js",helloworld);
+//so see here after script will be loaded and the helloworld function will be called.
+
+//also we can handle the callback error
+
+//Errors of the callback functions:-
+// 1)callback hell:-if we wanted to do some oper after some part is executed but it dosen't executed then it is called callback hell
+// 2)pyramid doom:-calling same function under another function. in other words nesting of functions of functions.
+
 //callback functions
 
 const faculties=[{
@@ -320,7 +399,7 @@ let newFaculty = {name:"Sneha Padhiar",Subject:"SE"};
 enrollFaculty(newFaculty);
 getFaculty();
 
-//see now here the faculty get enrolled in 3ms and it will be enrolled in background but the getFaculty function will execute when its timeout gets over i.e it will execute in 1ms .
+//see now here the faculty get enrolled in 5ms and it will be enrolled in background but the getFaculty function will execute when its timeout gets over i.e it will execute in 1ms .
 //so we will get this output only .
 // [
 //   { name: 'MLR', Subject: 'ML' },
@@ -443,16 +522,14 @@ const faculties2=[{
 function enrollFaculty2(faculty){
   return new Promise(function(resolve,reject){
     setTimeout(() => {
-      faculties2.push(faculty);
-      console.log('Faculty has been enrolled');
-      const error=false;
-      if(!error){
+      if(faculties2.push(faculty)){
+        console.log('faculty is enrolled');
         resolve();
-      }
-      else{
-        reject();
-      }
-        }, 3000);
+        }
+        else{
+            console.log('faculty is not enrolled');
+        }
+        }, 2000);
   });
 }
 
@@ -469,9 +546,38 @@ enrollFaculty2(newFaculty2).then(function(){
 }).catch(function(){
   console.log('some error occured');
 });
-
 //in short the function inside "then" is run as "resolve"
 //and functions outside "then" is run as "reject"
+
+//chaining of promises
+
+const f1=()=>{
+  return new Promise((resolve,reject)=>{
+    setTimeout(() => {
+      console.log("my name is MLR");
+      resolve("martin parmar");
+    }, 1000);
+  })
+}
+
+f1().then((faculty)=>{
+  console.log(`I am ${faculty}. and i am being called after f1 function`);
+
+  const f2=(faculty3)=>{
+    return new Promise((resolve,reject)=>{
+      setTimeout(() => {
+        console.log(`my name is ${faculty3}`);
+        resolve(200);
+      }, 2000);
+    })
+  }
+
+  f2("sneha padhiar").then((value)=>{
+    console.log("All done with Task. 200 OK");
+  }).catch((value)=>{
+    console.log("Not done with task. 404 Error");
+  });
+});
 
 //async and await
 //first see this normal function
@@ -543,12 +649,287 @@ console.log("last line of code");
 //in short if we make function async() then it returns promise that it will execute itself after some work.
 //and whenever it encounters "await" it will again return promise from that and executes rest of the functions/statements.
 
+//Understand async/await simply from here
+function resolvedafter2Seconds(){
+  setTimeout(() => {
+    return new Promise((resolve)=>{
+      resolve('resolved');
+    })
+  }, 2000);
+}
+
+async function asyncCall(){
+  console.log("Calling");
+  const result=await resolvedafter2Seconds();
+  console.log(result);
+}
+
+asyncCall();
+
+// We use async to return a promise.
+// We use await to wait and handle a promise.
 
 
+//Lets understand the concept of Fetch Api
+//lets say there is one html file in which there are two buttons . clicking on any one button will fetch the data from the particular file.
+
+//so its js code will be like these
+let myBtn = document.getElementById("myBtn");
+
+let content = document.getElementById("content");
+
+function getData(){
+  console.log("Started getData")
+  url="awt1.txt";
+  fetch(url).then((response)=>{
+    console.log("Inside first then")
+    return response.text();
+  }).then((data)=>{
+    console.log("Inside second then")
+    console.log(data);
+  })
+}
+
+console.log("before running getData")
+getData();
+console.log("After running getData")
+//o/p
+//Before running getData
+//after running getData
+//inside first then
+//inside second then
+//the things return in that "awt.txt" file
+
+//see this happen because "fetch" is a async process that will run in background . that's why the "after running getData" run first then the things return in the file executed after it.
+
+//lets say if we want to fetch the github users then just change the url
+function getData(){
+  console.log("Started getData")
+  url="https://api.github.com/users";
+  fetch(url).then((response)=>{
+    console.log("Inside first then")
+    return response.json();
+  }).then((data)=>{
+    console.log("Inside second then")
+    console.log(data);
+  })
+}
+
+console.log("before running getData")
+getData();
+console.log("After running getData")
+
+//search for api.github.com/users
+//also we change the response.text() to response.json() because it does parse the data i.e we will get data in form of Object form . otherwise we will get the data in Plain text form  
+
+//the above we see is for "get request for data".Now we will see for "Post request for data".
+
+function postData(){
+  url="https://dummy.restapiexample.com/api/v1/create";
+  data='{"name":"harry46","salary":"123","age":"23"}'
+  params={
+    method:'post',
+    headers:{
+      'Content-Type':'application/json'
+    },
+    // body: JSON.stringify(data);//we need to convert the data in string as by default it will be object but data we have to pass should be in string form
+    body: data//see here in our case the data is already in string form.so no need to use JSON.stringify() method
+  }
+  fetch(url,params).then(response=>response.json())
+  .then(data=>console.log(data) )
+}
+//see if there is only one parameter in case of arrow functions then no need to put the curly braces
+
+//now just search for "fake post request api"
+
+//lets understand the Object Literal for creating objects
+let car={
+  name:'Maruti 800',
+  topSpeed:89,
+  run:function (){
+    console.log("car is running");
+  }
+}
+//above is for only one car. if we want to make thousand of cars then we cannot use this, So we have to use constructors.
+
+function generalCar(carName,carSpeed){
+  this.name=carName; //here this refers to the object itself and not any other variable or function
+  this.topSpeed=carSpeed;
+  this.run=function(){
+    console.log(`${this.name} is running`);
+  }
+}
+
+car1=new generalCar('Mustang',200);
+console.log(car1);
+console.log(car1.run());
+
+//Object Prototype
+let intro={
+  name:'sujal',
+  id:'21ce046',
+  subject:'awt'
+}
+console.log(intro); //now see on browser. do inspect and there we will see all the details about this "intro" object. in that "_proto_:" will be like something written and that's the object prototype.
+
+//when we created an object with the help of object literal then Object Prototype was already provided to us. 
+
+//now lets say if we have created an object using constructor then:-
+
+function obj(personName,personId,personSub){
+  this.name=personName;
+  this.id=personId;
+  this.Sub=personSub;
+}
+let ob2=new obj('MLR','21ce064','awt');
+console.log(ob2);
+//now when we see in browser under inspect then under '_proto_' then we can see that the 'ob2's prototype' start from this 'obj prototype'
+
+//in simple words prototype means from which prototype we have made/create the object. 
+//when we create the object using object literal like 'let obj={}' then by default the js provides the prototype for given obj as 'Object.prototype'
+
+//MOST IMPP:- We cannot change the prototype of the object that is created by object literal. It can be only change if the object is created using constructor. So never change the prototype of object that is global object and from that object other objects are inherited/ created.
+
+ob2.prototype.getName=function(){
+  return this.name;
+}
+
+ob2.prototype.setName=function(newName){
+  this.name=newName;
+}
+//see means that we have added one "setName" function in prototype of object2 that sets the name to "newName".
+
+//Now there are many functions in prototype that we can see in browser under inspect under "prototype". there if we expand then there will be multiple functions. Also we can add our own function in that also but no for object which are created thorugh object literal.
+
+// The prototype of an object is not always Object.prototype. This is only for the objects created through object literal. Not for those who are created throught the constructors.
+
+//To know the prototype of any object function used is:-
+obj.__proto__ //to get the __proto__ of a particular object
+//or
+Object.getPrototypeOf(obj);  //this will give you the same result as above but in one line code.
+
+console.log(intro.__proto__);//will give you the prototype.
+//or 
+console.log(Object.getPrototypeOf(intro));
+
+//Object.create() method
+// The Object.create() method creates a new object and allows you to specify an object that will be used as the new object's prototype.
+
+const personPrototype={
+  sayHi: () => {
+    console.log("Hii");
+  }
+}
+
+const p1=Object.create(personPrototype);
+p1.sayHi();
+
+// use Object.create() to create a new object with personPrototype as its prototype
 
 
+//Object Prototypes Inheritance
+// first see this normal code 
+const personProto={
+  firstName:"Radhe",
+  LastName:"Mohan",
+  changeName:(givenName)=>{
+    this.name=givenName;
+  }
+}
 
+const person1=Object.create(personProto);
+person1.company="Acite";
 
+//now see this code 
+const person1=Object.create(personProto,{
+  name:{value:"sujal"},
+  role:{value:"Programmer"},
+})
+//Now if we change the name of this person1 lets say by the function changeName() which is in personProto then it will not change.
+person1.changeName("Radhe Radhe");//it will not change
 
+//so we have to basically see the ES6 classes but see this by writing this keyword it will change
+const person2=Object.create(personProto,{
+  name:{value:"sujal",writable:true},
+  role:{value:"Programmer"},
+})
+person2.changeName("Rohan");//now it will be change
 
+//Now lets see inheritance
+//Employee constructor
+function Employee(name,exp){
+  this.name=name;
+  this.exp=exp;
+}
 
+//lets say if we want to add the some function in the prototype of Employee then we can do like these as we have done above also
+Employee.prototype.slogan=()=>{
+   return `this company is best.Regards ${this.name}`;
+}
+
+let c1=new Employee("sujal",5);
+console.log(c1.slogan());
+
+//Programmer constructor
+function Programmer(name,exp,lan){ 
+  Employee.call(this,name,exp);
+  this.lan=lan;
+}
+
+//see when we write the amit.slogan() it will give error as its prototype is not equal to the prototype of Employee
+//inherit the prototype
+Programmer.prototype = Object.create(Employee.prototype);
+//here Object is to be created from the prototype of the Employee as the above line say these
+
+//manually set the constructor as it does not shows the constructor for programmer 
+Programmer.prototype.constructor = Programmer;//here we are setting the constructor of programmer class as programer and now when we call new programmer then
+
+let amit=new Programmer("amit",10,"Js");
+console.log(amit);
+
+//ES6 classes
+class Developer{
+  constructor(givenName,givenExp,giveSal){
+    this.name=givenName;
+    this.exp=givenExp;
+    this.sal=giveSal;
+  }
+
+  slogan=()=>{
+    return `this company is best.Regards ${this.name}`;
+ }
+
+ joiningyear=()=>{
+  let year=(new Date()).getFullYear(); //get current date and time in yr format
+ }
+
+ //if we want that we want to use any function without creating the object of class then use "static" keyword
+ static add(a,b){
+  return a+b;
+ }
+  
+}
+
+let s1=new Developer("Sujal",10,"6 lakhs");
+console.log(s1.slogan());
+console.log(s1.joiningyear());
+
+//calling static things(variable,function,etc) without creating the object of Developer class. We can directly call with the name of Class
+console.log(Developer.add(10,20));//30
+
+//now if we want to inherit the class Developer then
+//use 'extend' keyword
+class Tester extends Developer{
+  constructor(givenName,givenExp,giveSal,lan){
+    super (givenName , givenExp , giveSal );  ///to call parent's contructor 'super' is used
+    this.lan=lan;
+  }
+
+  static multiply(a,b){
+    return a*b;
+  }
+}
+
+s2=new Tester("rohit",2,"2 lakhs","ML")
+console.log(s2);
+console.log(Tester.multiply(3,2));
