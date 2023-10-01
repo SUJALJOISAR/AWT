@@ -315,6 +315,13 @@ typeof symObj;//"object"
 //mostly symbol is used in encapsulation
 // Because symbols are the only primitive data type that has reference identity (that is, you cannot create the same symbol twice), they behave like objects in some way
 
+//synchronous programming
+//it simply means the tasks will be executed one by one.Also it will be order wise executed.
+//for eg:-
+var name=prompt('what is your name?');
+var age=prompt('what is your age?');
+var color=prompt('what is your favorite color?');
+alert(`${name} ,${age},${color}`);
 
 //Asynchronous programming
 //Now Asynchronous programming allows multiple things to be execute at one time while synchronous programming does not.
@@ -325,8 +332,23 @@ typeof symObj;//"object"
 // 3)Callbacks
 
 //basically asynchronous functions run in background. if the function is going to take 3ms to complete then it will not block other functions. it will let him to complete before that function execute. 
+//for eg:-
+console.log('start');
+setTimeout(() => {
+  console.log('hey i am good');
+},2000);
+console.log('end');
+//output:-
+//start
+//end
+//hey i am good ->this will executed after 2ms.
 
 //some basic of callback functions
+// A callback function is a function passed into another function as an argument, which is then invoked inside the outer function to complete some kind of routine or action.
+
+// There are two ways in which the callback may be called: synchronous and asynchronous. Synchronous callbacks are called immediately after the invocation of the outer function, with no intervening asynchronous tasks, while asynchronous callbacks are called at some point later, after an asynchronous operation has completed.
+
+
 //without using callback function 
 // function loadscript(src){
 //   // var script=document.createElement('script'); here it will show error as it is just js page we need html page for it 
