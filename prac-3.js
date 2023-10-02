@@ -474,6 +474,29 @@ enrollFaculty1(newFaculty1,getFaculty1);
 // ]
 //in short using callback function will execute first and then only the other function will execute after its completion.
 
+//anuj bhaiya callback functions
+const calculate=(a,b,operation)=>{
+  return operation(a,b);
+}
+//see here 'operation' function acts as an callback function as after taking two variables by calculate function
+//third thing we have to pass is the function that either do some operation on this variables.
+
+const sub=(a,b)=> a-b;
+
+const ans=calculate(3,4,(num1,num2)=>{
+  return num1+num2;
+})
+
+const ans2=calculate(4,3,sub);
+
+console.log(ans);
+//o/p:-7
+
+console.log(ans2);
+//o/p:-1
+
+
+
 
 //promises
 // Essentially, a promise is a returned object to which you attach callbacks, instead of passing callbacks into a function
@@ -734,43 +757,85 @@ getCheese().then((cheese)=>{
 
 //now this more becomes simple using async/await function
 
-async function orderPizza(){
- try {
-  const cheese=await getCheese();//see here untill the promise is returned it will not go the next line
-  console.log("here is the cheese");
-  const dough=await makeDough(cheese);
-  console.log("here is the dough");
-  const pizza=await bakePizza(dough);
-  console.log("here is the pizza");
- } catch (error) {
-  console.log(error);
- }
+function getCheese(){
+  setTimeout(() => {
+    const cheese="🧀";
+  }, 2000);
 }
 
+function makeDough(cheese){
+  setTimeout(()=> { 
+   const dough=cheese+"🍩";
+  },2000);
+}
+
+function bakePizza(dough){
+  setTimeout(() => {
+    const pizza=dough+"🍕";
+  }, 2000);
+}
+
+async function orderPizza(){
+try {
+const cheese=await getCheese();//see here untill the promise is returned it will not go the next line.also just remove that resolve,reject that we do not need.
+console.log("here is the cheese");
+const dough=await makeDough(cheese);
+console.log("here is the dough");
+const pizza=await bakePizza(dough);
+console.log("here is the pizza");
+} catch (error) {
+console.log(error);
+}
+}
+
+orderPizza();
+
 //lets do this function using callback functions
+function getCheese2(callback){
+  setTimeout(() => {
+    const cheese2="🧀";//by pressing (ctrl+i)
+    console.log("here is the cheese");
+    callback(cheese2);
+  }, 2000);
+}
+
+getCheese2((cheese2)=>{
+  console.log("got the cheese",cheese2);
+})
+
+
+
 function getCheese(callback){
-    setTimeout(() => {
-      const cheese="🧀";//by pressing (ctrl+i)
-      callback(cheese);
-    }, 2000);
-  }
+  setTimeout(() => {
+    const cheese="🧀";//by pressing (ctrl+i)
+    console.log("here is the cheese");
+    callback(cheese);
+  }, 2000);
+}
 
 function makeDough(cheese,callback){
-    setTimeout(()=> { 
-     const dough=cheese+"🍩";
-     callback(dough);
-    },2000);
-  }
+  setTimeout(()=> { 
+   const dough=cheese+"🍩";
+   callback(dough);
+  },2000);
+}
 
 
 function bakePizza(dough,callback){
-    setTimeout(() => {
-      const pizza=dough+"🍕";
-      callback(pizza);
-    }, 2000);
-  }
+  setTimeout(() => {
+    const pizza=dough+"🍕";
+    callback(pizza);
+  }, 2000);
+}
 
-  getCheese()
+getCheese((cheese)=>{
+  makeDough(cheese,(dough)=>{
+      console.log('here is the dough');
+    bakePizza(dough,(pizza)=>{
+      console.log(`Here we go ${pizza}`);
+    });
+  });
+});
 
 
 //async and await
