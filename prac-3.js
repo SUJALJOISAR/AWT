@@ -318,10 +318,19 @@ typeof symObj;//"object"
 //synchronous programming
 //it simply means the tasks will be executed one by one.Also it will be order wise executed.
 //for eg:-
-var name=prompt('what is your name?');
-var age=prompt('what is your age?');
-var color=prompt('what is your favorite color?');
-alert(`${name} ,${age},${color}`);
+function prompt(message) {
+  // Your implementation of prompt goes here
+}
+
+function alert(message) {
+  // Your implementation of alert goes here
+}
+
+var name = prompt('what is your name?');
+var age = prompt('what is your age?');
+var color = prompt('what is your favorite color?');
+alert(`${name}, ${age}, ${color}`);
+
 
 //Asynchronous programming
 //Now Asynchronous programming allows multiple things to be execute at one time while synchronous programming does not.
@@ -372,7 +381,7 @@ console.log('end');
 //   }
 //   script.onerror = function(){
 //     console.log("Error has come in SRC:"+src); 
-//     callback(new Error("Src got some error"));
+//     callback(new Error("Src got some error"),src);
 //   }
 //   document.body.appendChild(script);
 // }
@@ -550,6 +559,7 @@ function enrollFaculty2(faculty){
         }
         else{
             console.log('faculty is not enrolled');
+            reject();
         }
         }, 2000);
   });
@@ -601,15 +611,177 @@ f1().then((faculty)=>{
   });
 });
 
+
+//another example of Promises
+const loginUser=(email,password)=>{
+  return new Promise((resolve,reject)=>{
+      setTimeout(() => {
+          console.log('Data from loginUser')
+          resolve(
+              {userEmail:email}
+          );
+      }, 3000);
+  });
+}
+
+const getUserVideos=(email)=>{
+  return new Promise((resolve,reject)=>{
+      setTimeout(() => {
+          resolve(["v1","v2","v3"]);
+      }, 1000);
+  });
+}
+
+const getUserVideosDetails=(video)=>{
+  return new Promise((resolve,reject)=>{
+      setTimeout(() => {
+          resolve(["Name","singer","track"]);
+      }, 1000);
+  });
+}
+
+//here we are providing "object" means userEmail is an object that will be store in
+//"user" that is an argument in function and it is an object that why we have written user.email
+loginUser("test@example.com",123456).then((user)=>{
+  getUserVideos(user.email);
+}).then((videos)=>{
+  getUserVideosDetails(videos[0]);
+}).then((details)=>{
+  console.log(details);
+})
+
+//anuj bhaiya Promises:-
+const ticket=new Promise((resolve,reject)=>{
+  const onBoarded=True;
+  if(onBoarded){
+    resolve("You have got the ticket.");//when we call resolve function and whatever we pass in 
+    //this parameter will be send to "then" part i.e promise fullfill part
+    //and when the promise is not fulfil then it goes to "catch" part means the parameter in reject will goes to catch part 
+  }
+  else{
+    reject("You have not got the ticket.");
+  }
+})
+
+ticket.then((data)=>{
+  console.log("whoo!",data);
+}).catch((data)=>{
+  console.log("oh no!",data);
+}).finally(()=>{
+  console.log("I will always be executed");
+})
+//see this finally block will definetaly executed whether the promise has been resolved or not
+
+//lets understand from "cheese example"
+function getCheese(){
+  return new Promise((resolve,reject)=>{
+    console.log('getting cheese');//this is synchronous task
+  })
+}
+console.log(getCheese());
+//see now without doing asynchronous task i.e without using setTimeout,setTimeinterval functions
+// our promise will be in fulfilled state.
+// o/p:-
+// Promise->{fulfilled:getting cheese}
+
+//if we use the asynchronous functions like setTimeout /setTimeinterval then the promise will be in pending state 
+//untill the resolve() or reject() function is called
+
+//means like this
+function getCheese(){
+  return new Promise((resolve,reject)=>{
+    setTimeout(() => {
+      const cheese="🧀";//by pressing (ctrl+i)
+      resolve(cheese);
+    }, 2000);
+  })
+}
+// console.log(getCheese());
+//o/p:-
+// Promise->{pending}
+//getting cheese
+
+function makeDough(cheese){
+  return new Promise((resolve,reject)=>{
+    setTimeout(()=> { 
+     const dough=cheese+"🍩";
+     resolve(dough); 
+    },2000);
+  })
+}
+
+function bakePizza(dough){
+  return new Promise((resolve,reject)=>{
+    setTimeout(() => {
+      const pizza=dough+"🍕";
+      resolve(pizza);
+    }, 2000);
+  })
+}
+
+getCheese().then((cheese)=>{
+  console.log("getting cheese!",cheese);
+  return makeDough(cheese);
+}).then((dough)=>{
+  console.log("here is the dough",dough);
+  return bakePizza(dough);
+}).then((pizza)=>{
+  console.log("here is the pizza",pizza);
+}).catch((data)=>{
+  console.log("error occured",data);
+});
+//see if we do not write "return" keyword before in this calling functions then instead of this dough and pizza , "undefinded" will be come.
+
+//now this more becomes simple using async/await function
+
+async function orderPizza(){
+ try {
+  const cheese=await getCheese();//see here untill the promise is returned it will not go the next line
+  console.log("here is the cheese");
+  const dough=await makeDough(cheese);
+  console.log("here is the dough");
+  const pizza=await bakePizza(dough);
+  console.log("here is the pizza");
+ } catch (error) {
+  console.log(error);
+ }
+}
+
+//lets do this function using callback functions
+function getCheese(callback){
+    setTimeout(() => {
+      const cheese="🧀";//by pressing (ctrl+i)
+      callback(cheese);
+    }, 2000);
+  }
+
+function makeDough(cheese,callback){
+    setTimeout(()=> { 
+     const dough=cheese+"🍩";
+     callback(dough);
+    },2000);
+  }
+
+
+function bakePizza(dough,callback){
+    setTimeout(() => {
+      const pizza=dough+"🍕";
+      callback(pizza);
+    }, 2000);
+  }
+
+  getCheese()
+
+
 //async and await
 //first see this normal function
-function name(){
+function funcker() {
   console.log("Inside name function");
   return "awt";
 }
 
 console.log("before calling name function");
-let a=name();
+let a = funcker();
 console.log("After calling name function");
 console.log(a);
 console.log("last line of code");
@@ -798,12 +970,12 @@ console.log(intro); //now see on browser. do inspect and there we will see all t
 
 //now lets say if we have created an object using constructor then:-
 
-function obj(personName,personId,personSub){
+function obj46(personName,personId,personSub){
   this.name=personName;
   this.id=personId;
   this.Sub=personSub;
 }
-let ob2=new obj('MLR','21ce064','awt');
+let ob2=new obj46('MLR','21ce064','awt');
 console.log(ob2);
 //now when we see in browser under inspect then under '_proto_' then we can see that the 'ob2's prototype' start from this 'obj prototype'
 
@@ -863,12 +1035,12 @@ const person1=Object.create(personProto);
 person1.company="Acite";
 
 //now see this code 
-const person1=Object.create(personProto,{
+const person46=Object.create(personProto,{
   name:{value:"sujal"},
   role:{value:"Programmer"},
 })
 //Now if we change the name of this person1 lets say by the function changeName() which is in personProto then it will not change.
-person1.changeName("Radhe Radhe");//it will not change
+person46.changeName("Radhe Radhe");//it will not change
 
 //so we have to basically see the ES6 classes but see this by writing this keyword it will change
 const person2=Object.create(personProto,{
