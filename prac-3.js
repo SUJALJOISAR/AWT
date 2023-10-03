@@ -1012,14 +1012,14 @@ let car={
 //above is for only one car. if we want to make thousand of cars then we cannot use this, So we have to use constructors.
 
 function generalCar(carName,carSpeed){
-  this.name=carName; //here this refers to the object itself and not any other variable or function
+  this.name=carName; //here 'this' refers to the object itself and not any other variable or function
   this.topSpeed=carSpeed;
   this.run=function(){
     console.log(`${this.name} is running`);
   }
 }
 
-car1=new generalCar('Mustang',200);
+let car1=new generalCar('Mustang',200);
 console.log(car1);
 console.log(car1.run());
 
@@ -1042,7 +1042,7 @@ function obj46(personName,personId,personSub){
 }
 let ob2=new obj46('MLR','21ce064','awt');
 console.log(ob2);
-//now when we see in browser under inspect then under '_proto_' then we can see that the 'ob2's prototype' start from this 'obj prototype'
+//now when we see in browser under inspect then under '_proto_' then we can see that the 'ob2's prototype' start from this 'obj46 prototype'
 
 //in simple words prototype means from which prototype we have made/create the object. 
 //when we create the object using object literal like 'let obj={}' then by default the js provides the prototype for given obj as 'Object.prototype'
@@ -1113,6 +1113,40 @@ const person2=Object.create(personProto,{
   role:{value:"Programmer"},
 })
 person2.changeName("Rohan");//now it will be change
+
+
+//see this harry's new prototypes and __proto__
+let haryobj={
+  name2:"Harry",
+  language:"js"
+}
+console.log(haryobj);//see "inspect" in browser
+
+let pharyobj={
+  run:()=>{
+    alert("run");
+  }
+}
+//now if we do haryobj.run() then it will give error as there is no such type of function in its prototype
+// but if we change the prototype of this 'haryobj' equal to 'pharyobj' then it will be okk
+haryobj.__proto__ = pharyobj;// now when i write haryobj.run(),then it will work fine because here hary
+haryobj.run();
+
+//if there was already an run() method in haryobj then it will run that function/method only. it will go to its prototype for checking whether the method is there or not only when there is not such method in its prototype and we call it
+
+//Now there is also an prototype of prototype
+pharyobj.__proto__={
+  name:"jackie"
+}
+console.log(haryobj.name);
+//o/p:- jackie 
+//basically it happen like this that it gone to haryobj to find "name" but there is name2 so it then gone to find in its "protoype"
+//and prototype of haryobj is pharyobj and also in that it didn't find it so then it gone to check in the prototype of 
+//pharyobj and there it find it so it will print
+//this way the chaining happens.
+
+
+
 
 //Now lets see inheritance
 //Employee constructor
