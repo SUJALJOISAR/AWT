@@ -1156,9 +1156,10 @@ function Employee(name,exp){
 }
 
 //lets say if we want to add the some function in the prototype of Employee then we can do like these as we have done above also
-Employee.prototype.slogan=()=>{
+Employee.prototype.slogan=function(){
    return `this company is best.Regards ${this.name}`;
 }
+//see here when we want to use 'this' keyword then always use function functionname() instead of arrow functions because it will give error
 
 let c1=new Employee("sujal",5);
 console.log(c1.slogan());
