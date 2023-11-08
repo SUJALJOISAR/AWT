@@ -412,7 +412,7 @@ const faculties=[{
   name:"Martin Parmar",
   Subject:"AI",
 }];
-//above is array
+//above is array of objects
 
 function enrollFaculty(faculty){
   setTimeout(() => {
@@ -791,20 +791,6 @@ console.log(error);
 orderPizza();
 
 //lets do this function using callback functions
-function getCheese2(callback){
-  setTimeout(() => {
-    const cheese2="🧀";//by pressing (ctrl+i)
-    console.log("here is the cheese");
-    callback(cheese2);
-  }, 2000);
-}
-
-getCheese2((cheese2)=>{
-  console.log("got the cheese",cheese2);
-})
-
-
-
 function getCheese(callback){
   setTimeout(() => {
     const cheese="🧀";//by pressing (ctrl+i)

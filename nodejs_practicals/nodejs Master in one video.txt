@@ -1,0 +1,171 @@
+Work of Backened isto manipulate the data in database.
+Basically there are CRUD Operations in Node js that are:-
+Create, Read , Update and Delete operations.
+
+So these are the 4 apis that backened engineer has to create
+The use of APIs is done by frontend engineer.
+Also when anyone clicks on any endpoint of any apis what task should be perform is seen by frontend engineer.
+
+There are Basically two things in Backened:- Server and Database.if third we want to add is then apis.
+
+There is one server that will containe many apis. 
+
+work of apis to do data manipulation, calculation and logic building.
+
+To check version of nodejs:- command is node --version
+in windows powershell
+
+then writing command:-node will then open node in powershell
+then we can do all the basic operations and anything in js lanaguage
+
+to downlaod any package then command is:- npm i "packagename".
+
+if we want to install express:-npm install express.
+
+make folder of nodejs and start with command :- npm init.
+then press "enter" and at last "Y".  
+
+
+->Now make one file "index.js" and print hello world using log command.
+
+->Now think whether this file may be load in browser. or not.
+
+->Yes we can easily load this file in browser using Nodejs commands.
+
+
+**->Just Write command:- node i(just press tab) then press enter.
+
+->**Now the problem will come that whenever we add something in file we have to manually execute that file again.
+
+->So there is one node js package which will automatically load the file as we add something and automatically execute it.
+
+->Command is:-npm install -g nodemon. here g means package will install globally.
+
+->if not globally then just write npm install nodemon. and will be definitely installed. And See it will installed in that particular "Package.JSON" File only.
+
+->Remember Whenever we start new NodejS File first command to run is npm init.
+
+->See After Installing Nodemon One "Script error" Will come. Just open Powershell in administrator mode and write this command:-
+Get-ExecutionPolicy
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser.
+
+->then Run the File using "nodemon ./index.js"
+
+->Now Our Primary Goal is to Create Nodejs Server.
+
+->First Import some modules that are by default present in node js.
+
+->Importing:-
+const http= require("http");
+console.log(http);
+
+->There are things like request and response and many other things.explore it later.
+
+->const server=http.createServer((req,res)=>{
+    console.log(req.url);//there are many methods just write "req." and you will get list of methods.
+})
+
+->Just Run "localhost:port" in browser. And every time whatever you add inside that "server" part , refresh the page and you will see the things return inside it in our terminal.
+
+->Now if we write res.end("Stop Loading the page"). See by using this end will stop that page loading. And we will see the message inside written it directly in that page.
+
+
+->By writing this "http://localhost:5000/about" we can get about page.
+
+->By writing this "http://localhost:5000/" we can get home page.  
+   if(req.url ==="/about"){
+        res.end("<h1>About Page</h1>");
+    }
+
+    if(req.url === "/"){
+        res.end("<h1>Home Page</h1>");
+    }
+
+    if(req.url === "/contact"){
+        res.end("<h1>Contact Page</h1>");
+    }
+    else{
+        res.end("<h1>Page Not Found</h1>");
+    }
+
+
+
+->Now see there are "MODULES" in nodejs. It can be anything like variables, functions etc.
+
+->Modules are of this types :- 1)http 2)other party module(like we install nodemon)  3)https and many more are there. 
+
+->it can be prebuilt . To see the various modules just write "require("")" here it will give many modules.
+
+->Lets make one file and export the things return in them.
+to export do this :-
+"module.exports=(thing return inside that particular file)."
+
+->Now in that file in which we have to import this write this:-
+const name=require("./features");
+    console.log(name);
+
+->Now this are old methods to export and import there is new method. Just open "package.JSON" file and write "type":"module",
+
+->Now see we have written :-
+const http=require("http") instead of this write this
+
+import http from "http";
+
+->Then in that features.js file write this :-
+export default (things inside that file).
+
+->then in that main file write this:-
+import name from "./feature.js";
+
+->so this is the best way to import and export anything from one file to another.
+
+->Now see if we want to export more than one things from one file to another then it is possible to "export default" only one thing from that. and if wanted then write this :-
+
+"export {thing1,thing2}" just do export expkicitly. And Remember the order in which you are exporting should remain same while importing.
+
+->Then we can also export while declaring things:-like this
+export const name2="ReactJS";
+export const name3="mongodb";
+
+->In that main file:-
+this way in one line we can write
+import name, { name2,name3 } from "./features.js";
+console.log(name); 
+console.log(name2);
+console.log(name3);
+
+//or we can access one of the values from that
+//console.log(Myobj.name);
+//console.log(Myobj.name2);
+//console.log(Myobj.name3);
+
+->Now lets talk about different modules which are inbuilt in nodejs:-
+1)"fs" module:-The fs module provides a lot of functionality for interacting with the file system. Some of the more common functions that you will use are writeFile() / writeFileSync() and readFile() / readFileSync() . These functions let you write to and read from files, respectively.
+
+->See in that writing console.log(home);
+will execute :-
+undefined
+Server is working 
+file read
+
+->Why this happen because this "file read" line is asynchronous task. so it will take its own time to execute.
+Means it will not block there it will allow the server to execute different functions.
+
+->Soln:- is do not save that in any variable just copy that part inside the if(req.url==='/') Conditional statement.
+
+so like this else if(req.url === "/"){
+const home=fs.readFile('./first.html',(err,data)=>{
+    res.end(home);
+});
+}
+->Also you have to add these new Things i.e error and data in that otherwise error will come. See previous we were knowing that first request will come and at last response comes in order. so here also maintain the same order.
+
+->See in that after comma there is function written whose meaning is that first that "first.html' file should be read and then that function should be called.
+
+->Or Otherwise if we don't want to do that then write before that "server" function only like this:-
+
+const home=fs.readFileSync("./first.html");//meaning of this is that untill this gets over nothing will start other than this.
+
+
+-
+ 

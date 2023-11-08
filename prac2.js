@@ -9,8 +9,8 @@ arr.push(10);
 console.log(arr);
 
 var arr2=["awt",true,46,{
-    "name":"sujal",
-    "id":"21ce046"
+    name:"sujal",
+    id:"21ce046"
 }]
 arr2.push("js tut");
 console.log(arr2)
@@ -66,7 +66,7 @@ console.log(months);
 // splice(start, deleteCount, item0, item1)
 // splice(start, deleteCount, item0, item1, /* …, */ itemN)
 
-// An integer indicating the number of elements in the array to remove from start.
+// An integer indicating the number of elements in the array to remove from start(here start means the first parameter).
 
 months.splice(3,1,'dec');
 console.log(months);
