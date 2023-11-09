@@ -823,6 +823,78 @@ getCheese((cheese)=>{
   });
 });
 
+//lets understand clearly the example of callback hell and pyramid doom. 
+// Callback hell and pyramid doom, also known as the "callback pyramid of doom," occur when you have multiple levels of nested 
+// callbacks in asynchronous JavaScript code. This can make your code difficult to read and maintain. Here's a simple example of 
+// callback hell:
+
+fs.readFile('file1.txt', 'utf8', (err, data1) => {
+  if (err) {
+    console.error(err);
+  } else {
+    fs.readFile('file2.txt', 'utf8', (err, data2) => {
+      if (err) {
+        console.error(err);
+      } else {
+        fs.readFile('file3.txt', 'utf8', (err, data3) => {
+          if (err) {
+            console.error(err);
+          } else {
+            console.log(data1, data2, data3);
+          }
+        });
+      }
+    });
+  }
+});
+
+// To resolve callback hell and make the code more readable, you can use async/await with promises. First, you can promisify the 
+// fs.readFile function and then use async/await to flatten the code structure. Here's an example of how you can refactor the code:
+
+const util = require('util');
+const fs = require('fs');
+
+const readFileAsync = util.promisify(fs.readFile);
+
+async function readFiles() {
+  try {
+    const data1 = await readFileAsync('file1.txt', 'utf8');
+    const data2 = await readFileAsync('file2.txt', 'utf8');
+    const data3 = await readFileAsync('file3.txt', 'utf8');
+    console.log(data1, data2, data3);
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+readFiles();
+
+//using promises
+const fs = require('fs');
+
+function readFilePromise(filename, encoding) {
+  return new Promise((resolve, reject) => {
+    fs.readFile(filename, encoding, (err, data) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(data);
+      }
+    });
+  });
+}
+
+readFilePromise('file1.txt', 'utf8').then(data1 => {
+    return readFilePromise('file2.txt', 'utf8').then(data2 => {
+        return readFilePromise('file3.txt', 'utf8').then(data3 => {
+            console.log(data1, data2, data3);
+          });
+      });
+  }).catch(err => {
+    console.error(err);
+  });
+
+
 
 //async and await
 //first see this normal function

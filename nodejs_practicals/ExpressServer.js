@@ -25,7 +25,7 @@ const Message=mongoose.model("Message",messageSchema);
 
 app.set("view engine","ejs");
 
-// express.static(path.join(path.resolve(),'public'));we will not directly used because it is 'middleware' just use whole in 'use'
+// express.static(path.join(path.resolve(),'public'));we will not directly used because it is 'middleware' just use whole thing in 'use'
 // console.log(path.join(path.resolve(),'public'));
 //now just we have to provide the static path to that express.static() to access that static index.html file
 //so use this 'use'
@@ -169,3 +169,22 @@ app.listen(port,()=>{
 
 //see direct write the names of css,js files in public folders in views or in an other folders 
 //means directly style.css, then only that css will affect on it while if we mention any directories kind of thing then it will not work
+
+
+
+//just one university paper example
+var http = require('http');
+var fs = require('fs');
+
+http.createServer(function (req, res) {
+    // Read a file and send its content as the response
+    fs.readFile('yourfile.txt', function (err, data) {
+        if (err) {
+            res.writeHead(404, { 'Content-Type': 'text/plain' });//see here previously we were only use 'setHeader' and 'statuscode' but if we want to write together then 'writeHead' is used
+            res.end('File not found');
+        } else {
+            res.writeHead(200, { 'Content-Type': 'text/plain' });
+            res.end(data);
+        }
+    });
+}).listen(8080);
